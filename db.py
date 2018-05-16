@@ -1,9 +1,10 @@
 import mysql.connector
+import local
 
 class Database:
 
-    def __init__(self, host, user, pswd, db):
-        self.connection = mysql.connector.connect(host=host, user=user, password=pswd, database=db)
+    def __init__(self):
+        self.connection = mysql.connector.connect(host=local.host, user=local.user, password=local.password, database=local.db)
         self.cursor = self.connection.cursor()
 
     def insert(self, query):

@@ -3,13 +3,12 @@ from telethon import TelegramClient
 # These example values won't work. You must get your own api_id and
 # api_hash from https://my.telegram.org, under API Development.
 from telethon.tl.types import PeerChannel
-import re
 import local
-import Database
+from db import Database
 
 last_id = 14655-500
 
-database = Database(host=local.host, user=local.user, pswd=local.pswd, db=local.db);
+database = Database()
 client = TelegramClient('session_name', local.api_id, local.api_hash)
 client.start()
 
