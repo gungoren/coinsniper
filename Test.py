@@ -28,8 +28,8 @@ cursor = database.query("select max(id) as mx from coin_notification")
 
 add_notification = ("INSERT INTO coin_notification (id, message, date) VALUES (%(notification_id)s, %(notification_message)s, %(notification_date)s)")
 last_id = 0
-for (mx) in cursor:
-    last_id = mx
+for mx in cursor:
+    last_id = mx[0]
 
 channel = PeerChannel(channel_id=1131948783)
 
@@ -40,11 +40,9 @@ while True:
     for m in messages:
         if m.id > last_id:
             last_id = m.id
-        print(m)
         notification = {
             'notification_id' : m.id,
             'notification_message' : m.message,
             'notification_date' : m.date
         }
-        print(notification)
-        #database.insert(add_notification, ())
+        database.insert(add_notification, notification)
