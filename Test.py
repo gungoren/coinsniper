@@ -5,9 +5,11 @@ from telethon import TelegramClient
 from telethon.tl.types import PeerChannel
 import re
 import local
+import Database
 
 last_id = 14655-500
 
+database = Database(host=local.host, user=local.user, pswd=local.pswd, db=local.db);
 client = TelegramClient('session_name', local.api_id, local.api_hash)
 client.start()
 
@@ -22,15 +24,28 @@ for d in dialogs:
             print(m.message)
             print(m)
 """
-channel = PeerChannel(1131948783)
-messages = client.get_messages(channel, min_id= last_id, limit=10)
-for m in messages:
-    type_reg = re.search('Critical (.+?) levels', m.message)
-    token_reg = re.search('#(.+?) ➡', m.message)
-    reg = re.search('Vol: (.+?) BTC', m.message)
-    if reg and token_reg and type_reg:
-        volume = reg.group(1)
-        token = token_reg.group(1)
-        type = type_reg.group(1)
-        if float(volume) > 100:
-            print(str(m.id) + " " + volume + " " + token + " " + type)
+
+cursor = database.query("select max(id) as mx from coinsniper")
+
+add_notification = ("INSERT INTO coin_notification (id, message, date) VALUES (%(notification_id)s, %(notification_message)s, %(notification_date)s)")
+last_id = 0
+for (mx) in cursor:
+    last_id = mx
+
+channel = PeerChannel(channel_id=1131948783)
+
+while True:
+    messages = client.get_messages(channel, min_id= last_id, limit=10)
+    if len(messages) == 0:
+        break
+    for m in messages:
+        if m.id > last_id:
+            last_id = m.id
+        print(m)
+        notification = {
+            'notification_id' : m.id,
+            'notification_message' : m.message,
+            'notification_date' : m.date
+        }
+        print(notification)
+        #database.insert(add_notification, ())
