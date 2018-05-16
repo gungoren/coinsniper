@@ -7,16 +7,9 @@ class Database:
         self.connection = mysql.connector.connect(host=local.host, user=local.user, password=local.password, database=local.db)
         self.cursor = self.connection.cursor()
 
-    def insert(self, query):
+    def insert(self, query, params=()):
         try:
-            self.cursor.execute(query)
-            self.connection.commit()
-        except:
-            self.connection.rollback()
-
-    def insert(self, query, params):
-        try:
-            self.cursor.execute(query, params)
+            self.cursor.execute(query,params)
             self.connection.commit()
         except:
             self.connection.rollback()

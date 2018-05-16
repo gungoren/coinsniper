@@ -24,9 +24,10 @@ for d in dialogs:
             print(m)
 """
 
+add_notification = ("INSERT INTO coin_notification (id, message, date) VALUES (%(notification_id)s, %(notification_message)s, %(notification_date)s)")
+
 cursor = database.query("select max(id) as mx from coin_notification")
 
-add_notification = ("INSERT INTO coin_notification (id, message, date) VALUES (%(notification_id)s, %(notification_message)s, %(notification_date)s)")
 last_id = 0
 for mx in cursor:
     last_id = mx[0]
@@ -46,3 +47,5 @@ while True:
             'notification_date' : m.date
         }
         database.insert(add_notification, notification)
+
+database.close()
