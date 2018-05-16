@@ -25,11 +25,12 @@ for d in dialogs:
 channel = PeerChannel(1131948783)
 messages = client.get_messages(channel, min_id= last_id, limit=10)
 for m in messages:
+    type_reg = re.search('Critical (.+?) levels', m.message)
     token_reg = re.search('#(.+?) ➡', m.message)
     reg = re.search('Vol: (.+?) BTC', m.message)
-    if reg and token_reg:
+    if reg and token_reg and type_reg:
         volume = reg.group(1)
         token = token_reg.group(1)
+        type = type_reg.group(1)
         if float(volume) > 100:
-            print("***************************")
-            print(volume + " " + token)
+            print(str(m.id) + " " + volume + " " + token + " " + type)
