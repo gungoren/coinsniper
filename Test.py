@@ -24,7 +24,7 @@ for d in dialogs:
             print(m)
 """
 
-cursor = database.query("select max(id) as mx from coinsniper")
+cursor = database.query("select max(id) as mx from coin_notification")
 
 add_notification = ("INSERT INTO coin_notification (id, message, date) VALUES (%(notification_id)s, %(notification_message)s, %(notification_date)s)")
 last_id = 0
