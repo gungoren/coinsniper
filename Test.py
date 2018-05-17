@@ -4,9 +4,8 @@ from telethon import TelegramClient
 # api_hash from https://my.telegram.org, under API Development.
 from telethon.tl.types import PeerChannel
 import local
+import re
 from db import Database
-
-last_id = 14655-500
 
 database = Database()
 client = TelegramClient('session_name', local.api_id, local.api_hash)
@@ -28,22 +27,23 @@ add_notification = ("INSERT INTO coin_notification (id, message, date) VALUES (%
 
 cursor = database.query("select max(id) as mx from coin_notification")
 
-last_id = 0
+last_db_id = 0
 for mx in cursor:
-    last_id = mx[0]
+    last_db_id = mx[0]
 
+regex = r'[^a-zA-Z0-9.()%/#]+'
 channel = PeerChannel(channel_id=1131948783)
 
 while True:
-    messages = client.get_messages(channel, min_id= last_id, limit=10)
+    messages = client.get_messages(channel, min_id=last_db_id, limit=1000)
     if len(messages) == 0:
         break
+
     for m in messages:
-        if m.id > last_id:
-            last_id = m.id
+        m.message = re.sub(regex, ' ', m.message)
         notification = {
             'notification_id' : m.id,
-            'notification_message' : m.message,
+            'notification_message' : m.message.encode('utf8'),
             'notification_date' : m.date
         }
         database.insert(add_notification, notification)
