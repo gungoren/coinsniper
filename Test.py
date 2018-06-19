@@ -17,8 +17,5 @@ binance = BinanceListing()
 sniper = CoinSniper()
 paratica = Paratica()
 
-binance.run()
-sniper.run()
-paratica.run()
-
-run_in_parallel(binance.run, sniper.run, paratica.run)
+if __name__ == "__main__":
+    run_in_parallel(binance.run, sniper.run, paratica.run)
