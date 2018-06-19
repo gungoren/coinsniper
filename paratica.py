@@ -62,11 +62,7 @@ class Paratica:
         client.start()
 
         cursor = database.query("select max(id) as mx from paratica_notification")
-
-        if cursor.rowcount > 0:
-            last_db_id = cursor.fetchone()[0]
-        else:
-            last_db_id = 0
+        last_db_id = cursor.next()[0]
 
         # paratica channel listener
         channel = PeerChannel(channel_id=1317438882)
