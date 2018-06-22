@@ -24,16 +24,19 @@ class Paratica:
     profit_1_notification = ("UPDATE paratica_notification SET "
                              "id = %(notification_id)s, "
                              "state = %(notification_state)s, "
+                             "stop_loss = %(stop_loss)s, "
                              "profit_1_rate = %(profit_1_rate)s "
                              "WHERE code = %(notification_code)s AND profit_1_rate = 0")
     profit_2_notification = ("UPDATE paratica_notification SET "
                              "id = %(notification_id)s, "
                              "state = %(notification_state)s, "
+                             "stop_loss = %(stop_loss)s, "
                              "profit_2_rate = %(profit_2_rate)s "
                              "WHERE code = %(notification_code)s AND profit_2_rate = 0")
     profit_3_notification = ("UPDATE paratica_notification SET "
                              "id = %(notification_id)s, "
                              "state = %(notification_state)s, "
+                             "stop_loss = %(stop_loss)s, "
                              "profit_3_rate = %(profit_3_rate)s "
                              "WHERE code = %(notification_code)s AND profit_3_rate = 0")
     regex = r'[^a-zA-Z0-9.()%/#]+'
@@ -121,29 +124,35 @@ class Paratica:
                 elif 'profit alert' in m.message.lower():
                     if 'take profit-3' not in m.message.lower():
                         profit_rate = self.extractValue(m.message, 'Profit Rate( +):( +)(.*)( +)\n', 3).replace(' %', '')
+                        stop_loss = self.extractValue(m.message, 'Stop Loss( +):( +)(.*)\n', 3)
                         notification ={
                             'notification_id' : m.id,
                             'notification_code' : code,
                             'notification_state' : 'profit_3',
-                            'profit_3_rate' : profit_rate
+                            'profit_3_rate' : profit_rate,
+                            'stop_loss': stop_loss,
                         }
                         database.execute(self.profit_3_notification, notification)
                     elif 'take profit-2' not in m.message.lower():
                         profit_rate = self.extractValue(m.message, 'Profit Rate( +):( +)(.*)( +)\n', 3).replace(' %', '')
+                        stop_loss = self.extractValue(m.message, 'Stop Loss( +):( +)(.*)\n', 3)
                         notification ={
                             'notification_id' : m.id,
                             'notification_code' : code,
                             'notification_state' : 'profit_2',
-                            'profit_2_rate' : profit_rate
+                            'profit_2_rate' : profit_rate,
+                            'stop_loss': stop_loss,
                         }
                         database.execute(self.profit_2_notification, notification)
                     elif 'take profit-1' not in m.message.lower():
                         profit_rate = self.extractValue(m.message, 'Profit Rate( +):( +)(.*)( +)\n', 3).replace(' %', '')
+                        stop_loss = self.extractValue(m.message, 'Stop Loss( +):( +)(.*)\n', 3)
                         notification ={
                             'notification_id' : m.id,
                             'notification_code' : code,
                             'notification_state' : 'profit_1',
-                            'profit_1_rate' : profit_rate
+                            'profit_1_rate' : profit_rate,
+                            'stop_loss': stop_loss,
                         }
                         database.execute(self.profit_1_notification, notification)
 
