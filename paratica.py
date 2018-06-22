@@ -24,19 +24,19 @@ class Paratica:
     profit_1_notification = ("UPDATE paratica_notification SET "
                              "id = %(notification_id)s, "
                              "state = %(notification_state)s, "
-                             "stop_loss = %(stop_loss)s, "
+                             "stop_loss = %(notification_stop_loss)s, "
                              "profit_1_rate = %(profit_1_rate)s "
                              "WHERE code = %(notification_code)s AND profit_1_rate = 0")
     profit_2_notification = ("UPDATE paratica_notification SET "
                              "id = %(notification_id)s, "
                              "state = %(notification_state)s, "
-                             "stop_loss = %(stop_loss)s, "
+                             "stop_loss = %(notification_stop_loss)s, "
                              "profit_2_rate = %(profit_2_rate)s "
                              "WHERE code = %(notification_code)s AND profit_2_rate = 0")
     profit_3_notification = ("UPDATE paratica_notification SET "
                              "id = %(notification_id)s, "
                              "state = %(notification_state)s, "
-                             "stop_loss = %(stop_loss)s, "
+                             "stop_loss = %(notification_stop_loss)s, "
                              "profit_3_rate = %(profit_3_rate)s "
                              "WHERE code = %(notification_code)s AND profit_3_rate = 0")
     regex = r'[^a-zA-Z0-9.()%/#]+'
@@ -129,8 +129,8 @@ class Paratica:
                             'notification_id' : m.id,
                             'notification_code' : code,
                             'notification_state' : 'profit_3',
-                            'profit_3_rate' : profit_rate,
-                            'stop_loss': stop_loss,
+                            'notification_stop_loss' : stop_loss,
+                            'profit_3_rate' : profit_rate
                         }
                         database.execute(self.profit_3_notification, notification)
                     elif 'take profit-2' not in m.message.lower():
@@ -140,8 +140,8 @@ class Paratica:
                             'notification_id' : m.id,
                             'notification_code' : code,
                             'notification_state' : 'profit_2',
-                            'profit_2_rate' : profit_rate,
-                            'stop_loss': stop_loss,
+                            'notification_stop_loss' : stop_loss,
+                            'profit_2_rate' : profit_rate
                         }
                         database.execute(self.profit_2_notification, notification)
                     elif 'take profit-1' not in m.message.lower():
@@ -151,8 +151,8 @@ class Paratica:
                             'notification_id' : m.id,
                             'notification_code' : code,
                             'notification_state' : 'profit_1',
-                            'profit_1_rate' : profit_rate,
-                            'stop_loss': stop_loss,
+                            'notification_stop_loss' : stop_loss,
+                            'profit_1_rate' : profit_rate
                         }
                         database.execute(self.profit_1_notification, notification)
 
