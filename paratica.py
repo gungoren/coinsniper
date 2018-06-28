@@ -77,7 +77,7 @@ class Paratica:
                 parity = self.extractValue(m.message, 'Signal Parity( +):( +)#(.*)?\n', 3)
                 code = self.extractValue(m.message, 'Signal Code( +):( +)#(.*)?\n', 3)
                 enter_price = self.extractValue(m.message, 'Enter Price( +):( +)(.*)\n', 3)
-                if code is '':
+                if code is '' or not parity.endswith('BTC'):
                     continue
                 if 'new trading signal' in m.message.lower():
                     stop_loss = self.extractValue(m.message, 'Stop Loss( +):( +)(.*)\n', 3)
