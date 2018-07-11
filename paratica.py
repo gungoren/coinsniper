@@ -21,6 +21,7 @@ class Paratica:
                          "id = %(notification_id)s, "
                          "state = %(notification_state)s, "
                          "status = 0, "
+                         "stop_loss = %(current_price)s, "
                          "exit_rate = %(exit_rate)s "
                          "WHERE code = %(notification_code)s")
     profit_1_notification = ("UPDATE paratica_notification SET "
@@ -119,11 +120,13 @@ class Paratica:
                     database.execute(self.stop_notification, notification)
                 elif 'exit position' in m.message.lower():
                     profit_rate = self.extractValue(m.message, 'Profit Rate( +):( +)(.*)( +)\n', 3).replace(' %', '')
+                    current_price = self.extractValue(m.message, 'Current Price( +):( +)(.*)\n', 3)
                     notification ={
                         'notification_id' : m.id,
                         'notification_code' : code,
                         'notification_state' : 'exit',
-                        'exit_rate' : profit_rate
+                        'exit_rate' : profit_rate,
+                        'current_price' : current_price
                     }
                     database.execute(self.exit_notification, notification)
                 elif 'profit alert' in m.message.lower():
