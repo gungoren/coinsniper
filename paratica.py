@@ -14,28 +14,33 @@ class Paratica:
     stop_notification = ("UPDATE paratica_notification SET "
                          "id = %(notification_id)s, "
                          "state = %(notification_state)s, "
+                         "status = 0, "
                          "stop_rate = %(stop_rate)s "
                          "WHERE code = %(notification_code)s")
     exit_notification = ("UPDATE paratica_notification SET "
                          "id = %(notification_id)s, "
                          "state = %(notification_state)s, "
+                         "status = 0, "
                          "exit_rate = %(exit_rate)s "
                          "WHERE code = %(notification_code)s")
     profit_1_notification = ("UPDATE paratica_notification SET "
                              "id = %(notification_id)s, "
                              "state = %(notification_state)s, "
+                             "status = 0, "
                              "stop_loss = %(notification_stop_loss)s, "
                              "profit_1_rate = %(profit_1_rate)s "
                              "WHERE code = %(notification_code)s AND profit_1_rate = 0")
     profit_2_notification = ("UPDATE paratica_notification SET "
                              "id = %(notification_id)s, "
                              "state = %(notification_state)s, "
+                             "status = 0, "
                              "stop_loss = %(notification_stop_loss)s, "
                              "profit_2_rate = %(profit_2_rate)s "
                              "WHERE code = %(notification_code)s AND profit_2_rate = 0")
     profit_3_notification = ("UPDATE paratica_notification SET "
                              "id = %(notification_id)s, "
                              "state = %(notification_state)s, "
+                             "status = 0, "
                              "stop_loss = %(notification_stop_loss)s, "
                              "profit_3_rate = %(profit_3_rate)s "
                              "WHERE code = %(notification_code)s AND profit_3_rate = 0")
