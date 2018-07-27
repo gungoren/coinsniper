@@ -91,7 +91,7 @@ class Paratica:
                     profit_2 = self.extractValue(m.message, 'Take Profit-2( +):( +)(.*)\n', 3)
                     profit_3 = self.extractValue(m.message, 'Take Profit-3( +):( +)(.*)\n', 3)
                     interval = self.extractValue(m.message, 'Chart Interval( +):( +)#(.*)\n', 3)
-                    if not(interval == '15MINS' or code not in 'B16PU B16U0'):
+                    if not(interval == '15MINS' or code in 'B16PU B16U0'):
                         continue
                     m.message = re.sub(self.regex, ' ', m.message)
                     notification = {
