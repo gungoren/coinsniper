@@ -30,21 +30,21 @@ class Paratica:
                              "status = 0, "
                              "stop_loss = %(notification_stop_loss)s, "
                              "profit_1_rate = %(profit_1_rate)s "
-                             "WHERE code = %(notification_code)s AND profit_1_rate = 0")
+                             "WHERE code = %(notification_code)s AND (profit_1_rate = 0 OR stop_loss != %(notification_stop_loss)s)")
     profit_2_notification = ("UPDATE paratica_notification SET "
                              "id = %(notification_id)s, "
                              "state = %(notification_state)s, "
                              "status = 0, "
                              "stop_loss = %(notification_stop_loss)s, "
                              "profit_2_rate = %(profit_2_rate)s "
-                             "WHERE code = %(notification_code)s AND profit_2_rate = 0")
+                             "WHERE code = %(notification_code)s AND (profit_2_rate = 0 OR stop_loss != %(notification_stop_loss)s)")
     profit_3_notification = ("UPDATE paratica_notification SET "
                              "id = %(notification_id)s, "
                              "state = %(notification_state)s, "
                              "status = 0, "
                              "stop_loss = %(notification_stop_loss)s, "
                              "profit_3_rate = %(profit_3_rate)s "
-                             "WHERE code = %(notification_code)s AND profit_3_rate = 0")
+                             "WHERE code = %(notification_code)s AND (profit_3_rate = 0 OR stop_loss != %(notification_stop_loss)s)")
     regex = r'[^a-zA-Z0-9.()%/#]+'
 
     def extractValue(self, text, reg, group):
