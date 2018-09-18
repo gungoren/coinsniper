@@ -16,35 +16,35 @@ class Paratica:
                          "state = %(notification_state)s, "
                          "status = 0, "
                          "stop_rate = %(stop_rate)s "
-                         "WHERE code = %(notification_code)s")
+                         "WHERE code = %(notification_code)s AND state NOT IN('exit', 'stop_loss')")
     exit_notification = ("UPDATE paratica_notification SET "
                          "id = %(notification_id)s, "
                          "state = %(notification_state)s, "
                          "status = 0, "
                          "stop_loss = %(current_price)s, "
                          "exit_rate = %(exit_rate)s "
-                         "WHERE code = %(notification_code)s")
+                         "WHERE code = %(notification_code)s AND state NOT IN('exit', 'stop_loss')")
     profit_1_notification = ("UPDATE paratica_notification SET "
                              "id = %(notification_id)s, "
                              "state = %(notification_state)s, "
                              "status = 0, "
                              "stop_loss = %(notification_stop_loss)s, "
                              "profit_1_rate = %(profit_1_rate)s "
-                             "WHERE code = %(notification_code)s AND (profit_1_rate = 0 OR stop_loss != %(notification_stop_loss)s)")
+                             "WHERE code = %(notification_code)s AND (profit_1_rate = 0 OR stop_loss != %(notification_stop_loss)s) AND state NOT IN('exit', 'stop_loss')")
     profit_2_notification = ("UPDATE paratica_notification SET "
                              "id = %(notification_id)s, "
                              "state = %(notification_state)s, "
                              "status = 0, "
                              "stop_loss = %(notification_stop_loss)s, "
                              "profit_2_rate = %(profit_2_rate)s "
-                             "WHERE code = %(notification_code)s AND (profit_2_rate = 0 OR stop_loss != %(notification_stop_loss)s)")
+                             "WHERE code = %(notification_code)s AND (profit_2_rate = 0 OR stop_loss != %(notification_stop_loss)s) AND state NOT IN('exit', 'stop_loss')")
     profit_3_notification = ("UPDATE paratica_notification SET "
                              "id = %(notification_id)s, "
                              "state = %(notification_state)s, "
                              "status = 0, "
                              "stop_loss = %(notification_stop_loss)s, "
                              "profit_3_rate = %(profit_3_rate)s "
-                             "WHERE code = %(notification_code)s AND (profit_3_rate = 0 OR stop_loss != %(notification_stop_loss)s)")
+                             "WHERE code = %(notification_code)s AND (profit_3_rate = 0 OR stop_loss != %(notification_stop_loss)s) AND state NOT IN('exit', 'stop_loss')")
     regex = r'[^a-zA-Z0-9.()%/#]+'
 
     def extractValue(self, text, reg, group):
@@ -71,7 +71,7 @@ class Paratica:
         client.start()
 
         cursor = database.query("select max(id) as mx from paratica_notification")
-        last_db_id = cursor.next()[0]
+        last_db_id = cursor.fetchone()[0]
 
         # paratica channel listener
         channel = PeerChannel(channel_id=1317438882)

@@ -1,6 +1,7 @@
 import mysql.connector
 import local
 
+
 class Database:
 
     def __init__(self):
