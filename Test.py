@@ -1,8 +1,6 @@
 from multiprocessing import Process
 from binance_listing import BinanceListing
-from coinsniper import CoinSniper
-from paratica import Paratica
-
+from supertrend import SuperTrend
 
 def run_in_parallel(*fns):
     proc = []
@@ -14,8 +12,7 @@ def run_in_parallel(*fns):
         p.join()
 
 binance = BinanceListing()
-sniper = CoinSniper()
-paratica = Paratica()
+supertrend = SuperTrend()
 
 if __name__ == "__main__":
-    run_in_parallel(binance.run, sniper.run, paratica.run)
+    run_in_parallel(binance.run, supertrend.run)
