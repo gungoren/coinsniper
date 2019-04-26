@@ -20,7 +20,7 @@ class SuperTrend:
 
         cursor = database.query("select id, currency, enter_price from orders_new where id > " + str(last_id))
         for row in cursor:
-            client.send_message(channel, row[0] + ":" + row[1] + " enter at " + row[2])
+            client.send_message(channel, str(row[0]) + ":" + row[1] + " enter at " + str(row[2]))
 
 
 if __name__ == "__main__":
