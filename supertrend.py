@@ -12,7 +12,7 @@ class SuperTrend:
         # send messages related super trend
         client = TelegramClient('session_name', local.api_id, local.api_hash)
         client.start()
-        channel = PeerChannel(channel_id=1482575365)
+        channel = PeerChannel(channel_id=1482575365)[0]
 
         last_message = client.get_messages(channel, limit=1)
 
