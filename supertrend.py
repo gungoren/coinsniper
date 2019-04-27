@@ -25,7 +25,7 @@ class SuperTrend:
                 client.send_message(channel, message)
 
             if row[2] == 'U':
-                message = "%d:%d %s close at %d profit %.2f" % (row[0], row[1], row[3], row[4], ((row[5] - row[4]) / row[4] * 100))
+                message = "%d:%d %s close at %d profit %.2f%%" % (row[0], row[1], row[3], row[4], ((row[5] - row[4]) / row[4] * 100))
                 client.send_message(channel, message)
 
 if __name__ == "__main__":
