@@ -18,13 +18,15 @@ class SuperTrend:
 
         last_id = last_message.message.split(':')[0]
 
-        cursor = database.query("select id, order_id, action, currency, enter_price, exit_price from orders_new_log where id > " + str(last_id))
+        cursor = database.query("select id, order_id, action, currency, enter_price, exit_price from orders_new_log where id > %d" % last_id)
         for row in cursor:
             if row[2] == 'I':
-                client.send_message(channel, str(row[0]) + ":" + str(row[1]) + " " + row[3] + " enter at " + str(row[4]))
+                message = "%d:%d %s enter at %d" % (row[0], row[1], row[3], row[4])
+                client.send_message(channel, message)
 
             if row[2] == 'U':
-                client.send_message(channel, str(row[0]) + ":" + str(row[1]) + " " + row[3] + " close at " + str(row[5]) + " profit " + str((row[5] - row[4]) / row[4] * 100))
+                message = "%d:%d %s close at %d profit %.2f" % (row[0], row[1], row[3], row[4], ((row[5] - row[4]) / row[4] * 100))
+                client.send_message(channel, message)
 
 if __name__ == "__main__":
     superTrend = SuperTrend()
