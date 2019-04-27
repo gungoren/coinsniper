@@ -18,7 +18,7 @@ class SuperTrend:
 
         last_id = last_message.message.split(':')[0]
 
-        cursor = database.query("select id, order_id, action, currency, enter_price, exit_price from orders_new_log where id > %d" % last_id)
+        cursor = database.query("select id, order_id, action, currency, enter_price, exit_price from orders_new_log where id > %s" % last_id)
         for row in cursor:
             if row[2] == 'I':
                 message = "%d:%d %s enter at %d" % (row[0], row[1], row[3], row[4])
