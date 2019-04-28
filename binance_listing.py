@@ -6,10 +6,7 @@ from bs4 import BeautifulSoup
 
 class BinanceListing:
 
-    def run(self):
-        # send messages related binance listing
-        client = TelegramClient('session_name', local.api_id, local.api_hash)
-        client.start()
+    def run(self, client):
         channel = PeerChannel(channel_id=1347367599)
 
         last_message = client.get_messages(channel, limit=1)[0]
@@ -30,5 +27,8 @@ class BinanceListing:
             client.send_message(channel, l)
 
 if __name__ == "__main__":
+    # send messages related binance listing
+    _client = TelegramClient('session_name', local.api_id, local.api_hash)
+    _client.start()
     binance = BinanceListing()
-    binance.run()
+    binance.run(_client)

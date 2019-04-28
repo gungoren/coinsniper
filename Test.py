@@ -1,6 +1,8 @@
+from telethon import TelegramClient
 from multiprocessing import Process
 from binance_listing import BinanceListing
 from supertrend import SuperTrend
+import local
 
 def run_in_parallel(*fns):
     proc = []
@@ -14,5 +16,9 @@ def run_in_parallel(*fns):
 binance = BinanceListing()
 supertrend = SuperTrend()
 
+# send messages related binance listing
+client = TelegramClient('session_name', local.api_id, local.api_hash)
+client.start()
+
 if __name__ == "__main__":
-    run_in_parallel(binance.run, supertrend.run)
+    run_in_parallel(binance.run(client), supertrend.run(client))
