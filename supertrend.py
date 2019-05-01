@@ -1,7 +1,7 @@
 from telethon import TelegramClient
 from telethon.tl.types import PeerChannel
 import local
-import datetime
+import time
 from db import Database
 
 
@@ -18,13 +18,13 @@ class SuperTrend:
         cursor = database.query("select id, order_id, action, currency, enter_price, exit_price, enter_time, exit_time from orders_new_log where id > %s" % last_id)
         for row in cursor:
             if row[2] == 'I':
-                t = datetime.datetime.utcfromtimestamp(row[6]).strftime('%d-%m-%Y %H:%M')
-                message = "%d:%d %s enter at %d %s" % (row[0], row[1], row[3], row[4], t)
+                t = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(row[6]))
+                message = "%d:%d %s enter at %.6f %s" % (row[0], row[1], row[3], row[4], t)
                 client.send_message(channel, message)
 
             if row[2] == 'U':
-                t = datetime.datetime.utcfromtimestamp(row[7]).strftime('%d-%m-%Y %H:%M')
-                message = "%d:%d %s close at %d profit %.2f%% %s" % (row[0], row[1], row[3], row[4], ((row[5] - row[4]) / row[4] * 100), t)
+                t = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(row[7]))
+                message = "%d:%d %s close at %.6f profit %.2f%% %s" % (row[0], row[1], row[3], row[4], ((row[5] - row[4]) / row[4] * 100), t)
                 client.send_message(channel, message)
 
 if __name__ == "__main__":
