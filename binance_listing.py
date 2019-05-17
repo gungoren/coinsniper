@@ -26,6 +26,7 @@ class BinanceListing:
         for l in my_list:
             client.send_message(channel, l)
 
+
 if __name__ == "__main__":
     # send messages related binance listing
     _client = TelegramClient('session_name', local.api_id, local.api_hash)

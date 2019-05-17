@@ -24,7 +24,7 @@ class SuperTrend:
 
             if row[2] == 'U':
                 t = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(row[7]))
-                message = "%d:%d %s close at %.6f profit %.2f%% %s" % (row[0], row[1], row[3], row[4], ((row[5] - row[4]) / row[4] * 100), t)
+                message = "%d:%d %s close at %.6f profit %.2f%% %s" % (row[0], row[1], row[3], row[5], ((row[5] - row[4]) / row[4] * 100), t)
                 client.send_message(channel, message)
 
 if __name__ == "__main__":
