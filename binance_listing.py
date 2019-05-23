@@ -11,7 +11,6 @@ class BinanceListing:
 
     def getLastMessage(self, filename):
         query = "SELECT value FROM properties WHERE name = '%s'" % filename
-        print(query)
         cursor = self.database.query(query)
         return cursor.fetchone()[0]
 
