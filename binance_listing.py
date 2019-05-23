@@ -42,6 +42,7 @@ class BinanceListing:
             if len(my_list) > 0:
                 self.writeMessage(files[i], my_list[len(my_list) - 1])
 
+
 if __name__ == "__main__":
     # send messages related binance listing
     _client = TelegramClient('session_name', local.api_id, local.api_hash)
