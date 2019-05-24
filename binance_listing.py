@@ -10,14 +10,21 @@ class BinanceListing:
     database = Database()
 
     def getLastMessage(self, filename):
-        query = "SELECT value FROM properties WHERE name = '%s'" % (filename)
-        cursor = self.database.query(query)
+        param = {
+            'name': filename,
+        }
+        query = "SELECT value FROM properties WHERE name = %(name)s"
+        cursor = self.database.query(query, param)
         return cursor.fetchone()[0]
 
 
     def writeMessage(self, filename, message):
-        query = "UPDATE properties SET value = '%s' WHERE name =  '%s'" % (message, filename)
-        self.database.execute(query)
+        param = {
+            'value' : message,
+            'name': filename,
+        }
+        query = "UPDATE properties SET value = %(value)s WHERE name =  %(name)s"
+        self.database.execute(query, param)
 
     def run(self, client):
         channel = PeerChannel(channel_id=1347367599)

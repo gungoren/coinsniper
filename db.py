@@ -1,5 +1,6 @@
 import mysql.connector
 import local
+import datetime
 
 
 class Database:
@@ -15,8 +16,8 @@ class Database:
         except Exception as err:
             self.connection.rollback()
 
-    def query(self, query):
-        self.cursor.execute(query)
+    def query(self, query, params=()):
+        self.cursor.execute(query, params)
         return self.cursor
 
     def close(self):
