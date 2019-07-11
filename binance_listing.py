@@ -5,11 +5,11 @@ import requests
 from bs4 import BeautifulSoup
 from db import Database
 
-class BinanceListing:
 
+class BinanceListing:
     database = Database()
 
-    def getLastMessage(self, filename):
+    def get_last_message(self, filename):
         param = {
             'name': filename,
         }
@@ -17,10 +17,9 @@ class BinanceListing:
         cursor = self.database.query(query, param)
         return cursor.fetchone()[0]
 
-
-    def writeMessage(self, filename, message):
+    def write_message(self, filename, message):
         param = {
-            'value' : message,
+            'value': message,
             'name': filename,
         }
         query = "UPDATE properties SET value = %(value)s WHERE name =  %(name)s"
@@ -35,18 +34,21 @@ class BinanceListing:
         sections = soup.select('ul.article-list')
         files = ["listing", "announce"]
 
-        for (i,section) in enumerate(sections):
+        for (i, section) in enumerate(sections):
             my_list = list()
             for item in section.select('li.article-list-item a'):
-                if self.getLastMessage(files[i]) != item.text.strip():
-                    my_list.append(item.text.strip())
+                if self.get_last_message(files[i]) != item.text.strip():
+                    _message = item.text.strip()
+                    if item.has_attr('href'):
+                        _message = '<a href="{}">{}</a>'.format(item['href'], _message)
+                    my_list.append(_message)
                 else:
                     break
             my_list.reverse()
             for k in my_list:
                 client.send_message(channel, k)
             if len(my_list) > 0:
-                self.writeMessage(files[i], my_list[len(my_list) - 1])
+                self.write_message(files[i], my_list[len(my_list) - 1])
 
 
 if __name__ == "__main__":
