@@ -39,8 +39,8 @@ class BinanceListing:
             for item in section.select('li.article-list-item a'):
                 if self.get_last_message(files[i]) != item.text.strip():
                     _message = item.text.strip()
-                    if item.has_attr('href'):
-                        _message = '<a href="{}">{}</a>'.format(item['href'], _message)
+                    #if item.has_attr('href'):
+                    #    _message = '<a href="{}">{}</a>'.format(item['href'], _message)
                     my_list.append(_message)
                 else:
                     break
