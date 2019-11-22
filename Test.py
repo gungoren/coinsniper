@@ -1,8 +1,9 @@
-from telethon import TelegramClient
+from telethon.sync import TelegramClient
 from multiprocessing import Process
 from binance_listing import BinanceListing
 from supertrend import SuperTrend
 import local
+
 
 def run_in_parallel(*fns):
     proc = []
@@ -12,6 +13,7 @@ def run_in_parallel(*fns):
         proc.append(p)
     for p in proc:
         p.join()
+
 
 binance = BinanceListing()
 supertrend = SuperTrend()
